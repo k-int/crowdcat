@@ -27,7 +27,17 @@
 
       <div class="collapse navbar-collapse pull-right">
         <ul class="nav navbar-nav">
-          <li class="${controllerName=='home' && actionName=='login' ? 'active' : ''}"><g:link controller="home" action="login">Login</g:link></li>
+          <sec:ifLoggedIn>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><sec:username/><b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+              </ul>
+            </li>
+          </sec:ifLoggedIn>
+          <sec:ifNotLoggedIn>
+            <li class="${controllerName=='home' && actionName=='login' ? 'active' : ''}"><g:link controller="home" action="login">Login</g:link></li>
+          </sec:ifNotLoggedIn>
         </ul>
       </div>
 

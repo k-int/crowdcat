@@ -8,5 +8,7 @@
 </head>
 <body>
 
+  Public home page
+
 </body>
 </html>
