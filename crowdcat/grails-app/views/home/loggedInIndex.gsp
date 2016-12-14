@@ -28,17 +28,23 @@
             <h3>Overview</h3>
             <p>Some content.</p>
           </div>
-        </div>
 
-        <div class="tab-content">
-          <div id="universes" class="tab-pane active">
+          <div id="universes" class="tab-pane">
             <h3>Universes</h3>
+            <g:link action="createUniverse" class="btn btn-success pull-right">Create Universe</g:link>
             <p>Some content.</p>
+            <table class="table table-striped">
+              <tbody>
+                <g:each in="${unilist}" var="u">
+                  <tr>
+                    <td>${u}</td>
+                  </tr>
+                </g:each>
+              </tbody>
+            </table>
           </div>
-        </div>
 
-        <div class="tab-content">
-          <div id="projects" class="tab-pane active">
+          <div id="projects" class="tab-pane">
             <h3>Projects</h3>
             <p>Some content.</p>
           </div>
