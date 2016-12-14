@@ -24,6 +24,13 @@
         </button>
         <a class="navbar-brand" href="#">CrowdCat</a>
       </div>
+
+      <div class="collapse navbar-collapse pull-right">
+        <ul class="nav navbar-nav">
+          <li class="${controllerName=='home' && actionName=='login' ? 'active' : ''}"><g:link controller="home" action="login">Login</g:link></li>
+        </ul>
+      </div>
+
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
           <li class="${controllerName=='home' && actionName=='index' ? 'active' : ''}"><g:link controller="home" action="index">Home</g:link></li>
@@ -43,6 +50,7 @@
           -->
         </ul>
       </div><!--/.nav-collapse -->
+
     </div>
   </div>
   

@@ -6,6 +6,7 @@ grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'crowdcat.UserR
 grails.plugin.springsecurity.authority.className = 'crowdcat.Role'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/',               access: ['permitAll']],
+	[pattern: '/home/index',     access: ['permitAll']],
 	[pattern: '/error',          access: ['permitAll']],
 	[pattern: '/index',          access: ['permitAll']],
 	[pattern: '/index.gsp',      access: ['permitAll']],

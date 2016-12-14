@@ -40,7 +40,7 @@ grails:
                         successUri: "/oauth2/google/success"    #optional
                         failureUri: "/oauth2/google/failure"    #optional
                         callback: "/oauth2/google/callback"     #optional
-                        scopes: "openid,profile,email"          #optional, see https://developers.google.com/identity/protocols/googlescopes#monitoringv3
+                        scopes: "https://www.googleapis.com/auth/userinfo.profile" #optional, see https://developers.google.com/identity/protocols/googlescopes#monitoringv3
 ---
 grails:
     mime:
