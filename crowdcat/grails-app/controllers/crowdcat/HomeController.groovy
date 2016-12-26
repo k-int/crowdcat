@@ -10,7 +10,8 @@ class HomeController {
     def result = [:]
     def user = springSecurityService.currentUser
     if ( user ) {
-      result.unilist = Universe.list()
+      result.sclist = SourceCollection.list()
+      result.plist = Project.list()
       render(view:'loggedInIndex', model:result)
     }
     else {
@@ -24,20 +25,20 @@ class HomeController {
   }
 
   @Secured(['ROLE_INST_ADM', 'IS_AUTHENTICATED_FULLY'])
-  def createUniverse() {
+  def createSourceCollection() {
 
-    log.debug("home::createUniverse");
+    log.debug("home::createSourceCollection");
 
     if ( request.method=='POST' ) {
-      if ( params.newUniverseName ) {
-        log.debug("Create new universe with name ${params.newUniverseName}");
-        def new_universe = new Universe(name:params.newUniverseName).save(flush:true, failOnError:true)
-        log.debug("Result: ${new_universe}");
+      if ( params.newSourceCollectionName ) {
+        log.debug("Create new source collection with name ${params.newSourceCollectionName}");
+        def new_source_collection = new SourceCollection(name:params.newSourceCollectionName).save(flush:true, failOnError:true)
+        log.debug("Result: ${new_source_collection}");
         redirect action:'index'
       }
     }
     else {
-      // show create universe form
+      // show create source collection form
     }
     
   }

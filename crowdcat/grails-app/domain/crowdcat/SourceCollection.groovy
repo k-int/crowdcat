@@ -1,6 +1,6 @@
 package crowdcat
 
-class Universe {
+class SourceCollection {
 
   String name
 
@@ -9,7 +9,7 @@ class Universe {
   }
 
   static mapping = {
-    table 'cc_universe'
-    name column:'uni_name'
+    table 'cc_source_collection'
+    name column:'sc_name'
   }
 }

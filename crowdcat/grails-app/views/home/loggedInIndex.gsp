@@ -19,7 +19,7 @@
 
         <ul class="nav nav-tabs">
           <li role="navigation" class="active"><a data-toggle="tab" href="#overview">Overview</a></li>
-          <li role="navigation"><a data-toggle="tab" href="#universes">Universes</a></li>
+          <li role="navigation"><a data-toggle="tab" href="#sourceCollections">Source Collections</a></li>
           <li role="navigation"><a data-toggle="tab" href="#projects">Projects</a></li>
         </ul>
 
@@ -29,15 +29,14 @@
             <p>Some content.</p>
           </div>
 
-          <div id="universes" class="tab-pane">
-            <h3>Universes</h3>
-            <g:link action="createUniverse" class="btn btn-success pull-right">Create Universe</g:link>
-            <p>Some content.</p>
+          <div id="sourceCollections" class="tab-pane">
+            <h3>Source Collections</h3>
+            <g:link action="createSourceCollection" class="btn btn-success pull-right">New Source Collection</g:link>
             <table class="table table-striped">
               <tbody>
-                <g:each in="${unilist}" var="u">
+                <g:each in="${sclist}" var="sc">
                   <tr>
-                    <td>${u}</td>
+                    <td>${sc}</td>
                   </tr>
                 </g:each>
               </tbody>
@@ -46,7 +45,18 @@
 
           <div id="projects" class="tab-pane">
             <h3>Projects</h3>
-            <p>Some content.</p>
+            <g:link action="createProject" class="btn btn-success pull-right">New Project</g:link>
+            <table class="table table-striped">
+              <tbody>
+                <g:each in="${projList}" var="p">
+                  <tr>
+                    <td>${p}</td>
+                  </tr>
+                </g:each>
+              </tbody>
+            </table>
+          </div>
+
           </div>
         </div>
 

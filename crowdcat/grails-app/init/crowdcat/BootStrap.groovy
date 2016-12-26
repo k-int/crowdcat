@@ -7,9 +7,10 @@ class BootStrap {
   ]
 
   def init = { servletContext ->
+
     setUpUserAccounts()
  
-    def default_uni = Universe.findByName('default') ?: new Universe(name:'default').save(flush:true, failOnError:true);
+    def default_uni = SourceCollection.findByName('default') ?: new SourceCollection(name:'default').save(flush:true, failOnError:true);
   }
 
   def destroy = {
