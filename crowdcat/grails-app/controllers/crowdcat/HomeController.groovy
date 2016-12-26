@@ -25,21 +25,39 @@ class HomeController {
   }
 
   @Secured(['ROLE_INST_ADM', 'IS_AUTHENTICATED_FULLY'])
-  def createSourceCollection() {
+  def createESSourceCollection() {
 
-    log.debug("home::createSourceCollection");
+    log.debug("home::createESSourceCollection");
 
     if ( request.method=='POST' ) {
-      if ( params.newSourceCollectionName ) {
-        log.debug("Create new source collection with name ${params.newSourceCollectionName}");
-        def new_source_collection = new SourceCollection(name:params.newSourceCollectionName).save(flush:true, failOnError:true)
+      if ( params.newSourceCollectionName && params.esUrl ) {
+        log.debug("Create new source collection with name ${params.newSourceCollectionName},${params.esUrl}");
+        def new_source_collection = new ElasticSearchSourceCollection(name:params.newSourceCollectionName, esUrl: params.esUrl).save(flush:true, failOnError:true)
         log.debug("Result: ${new_source_collection}");
-        redirect action:'index'
+        redirect action:'index', fragment:'sourceCollections'
       }
     }
     else {
       // show create source collection form
     }
-    
   }
+
+  @Secured(['ROLE_INST_ADM', 'IS_AUTHENTICATED_FULLY'])
+  def createProject() {
+
+    log.debug("home::createProject");
+
+    if ( request.method=='POST' ) {
+      if ( params.newProjectName ) {
+        log.debug("Create new project with name ${params.newProjectName}");
+        def new_project = new Project(name:params.newProjectName).save(flush:true, failOnError:true)
+        log.debug("Result: ${new_project}");
+        redirect action:'index', fragment: 'projects'
+      }
+    }
+    else {
+      // show create project form
+    }
+  }
+
 }

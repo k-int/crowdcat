@@ -3,14 +3,16 @@ package crowdcat
 class BootStrap {
 
   def sysusers = [
-    [name:'admin',pass:'admin',display:'Admin',email:'admin@k-int.com', roles:['ROLE_ADMIN','ROLE_USER', 'ROLE_INST_ADM']]
+    [name:'admin',pass:'admin',display:'Admin',email:'admin@k-int.com', roles:['ROLE_ADMIN','ROLE_USER', 'ROLE_INST_ADM']],
+    [name:'fred',pass:'fred',display:'Volunteer Fred',email:'fred@k-int.com', roles:['ROLE_VOLUNTEER','ROLE_USER']]
   ]
 
   def init = { servletContext ->
 
     setUpUserAccounts()
  
-    def default_uni = SourceCollection.findByName('default') ?: new SourceCollection(name:'default').save(flush:true, failOnError:true);
+    def default_uni = SourceCollection.findByName('default') ?: new ElasticSearchSourceCollection(name:'default', 
+                                                                                                  esUrl:'http://151.252.2.199:9200/ra/_search?q=object.multimedia.processed.zoom.location:*').save(flush:true, failOnError:true);
   }
 
   def destroy = {

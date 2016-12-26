@@ -1,6 +1,6 @@
 package crowdcat
 
-class SourceCollection {
+abstract class SourceCollection {
 
   String name
 
@@ -12,4 +12,7 @@ class SourceCollection {
     table 'cc_source_collection'
     name column:'sc_name'
   }
+
+  public abstract String getNiceName();
+
 }

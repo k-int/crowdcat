@@ -30,13 +30,24 @@
           </div>
 
           <div id="sourceCollections" class="tab-pane">
+            <g:link action="createESSourceCollection" class="btn btn-success pull-right">New ES Source</g:link>
             <h3>Source Collections</h3>
-            <g:link action="createSourceCollection" class="btn btn-success pull-right">New Source Collection</g:link>
             <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Class</th>
+                </tr>
+              </thead>
               <tbody>
                 <g:each in="${sclist}" var="sc">
                   <tr>
-                    <td>${sc}</td>
+                    <td>${sc.id}</td>
+                    <td>${sc.name}</td>
+                    <td>${sc.niceName}</td>
+                    <td>${sc.class.name}</td>
                   </tr>
                 </g:each>
               </tbody>
@@ -44,11 +55,11 @@
           </div>
 
           <div id="projects" class="tab-pane">
-            <h3>Projects</h3>
             <g:link action="createProject" class="btn btn-success pull-right">New Project</g:link>
+            <h3>Projects</h3>
             <table class="table table-striped">
               <tbody>
-                <g:each in="${projList}" var="p">
+                <g:each in="${plist}" var="p">
                   <tr>
                     <td>${p}</td>
                   </tr>
