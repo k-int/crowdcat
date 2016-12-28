@@ -12,4 +12,8 @@ class Project {
     table 'cc_project'
     name column:'prj_name'
   }
+
+  public ensureResourcePresent(resource_uri, description) {
+    log.debug("ensureResourcePresent(${resource_uri},${description}");
+  }
 }

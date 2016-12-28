@@ -15,4 +15,10 @@ abstract class SourceCollection {
 
   public abstract String getNiceName();
 
+  /**
+   *  Update the specifid project adding any resources from the source that are new or have changed
+   *  since last check
+   */
+  public abstract void update(project);
+
 }

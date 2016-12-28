@@ -21,6 +21,7 @@
           <li role="navigation" class="active"><a data-toggle="tab" href="#overview">Overview</a></li>
           <li role="navigation"><a data-toggle="tab" href="#sourceCollections">Source Collections</a></li>
           <li role="navigation"><a data-toggle="tab" href="#projects">Projects</a></li>
+          <li role="navigation" class="pull-right"><a data-toggle="tab" href="#resourceViewer">Viewer</a></li>
         </ul>
 
         <div class="tab-content">
@@ -68,12 +69,24 @@
             </table>
           </div>
 
+          <div id="resourceViewer" class="tab-pane">
+            <h3>Resource Viewer</h3>
+            <g:form action="resourceViewer">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Manifest" value="http://dams.llgc.org.uk/iiif/2.0/389553/manifest.json">
+                <span class="input-group-btn"><button class="btn btn-default">Load</button></span>
+              </div>
+            </g:form>
+            <div class="uv col-md-12" data-locale="en-GB:English (GB),cy-GB:Cymraeg" data-config="" data-uri="http://dams.llgc.org.uk/iiif/2.0/4004562/manifest.json" data-sequenceindex="0" data-canvasindex="0" data-zoom="" data-rotation="0" style="width:800px; height:600px; background-color: #000"></div>
           </div>
+
         </div>
 
       </div>
     </div>
   </div>
+
+  <asset:javascript id="embedUV" src="uv/lib/embed.js" />
 
 </body>
 </html>

@@ -49,6 +49,9 @@ dependencies {
     compile 'org.grails.plugins:spring-security-core:3.1.+'
     compile 'org.grails.plugins:spring-security-oauth2:1.+'
     compile 'org.grails.plugins:spring-security-oauth2-google:1.1.+'
+    compile 'net.sf.opencsv:opencsv:2.0'
+    compile 'commons-io:commons-io:2.5'
+
     profile "org.grails.profiles:web"
     runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.11.6"
     runtime "com.h2database:h2"

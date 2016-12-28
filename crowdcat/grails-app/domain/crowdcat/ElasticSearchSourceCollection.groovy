@@ -19,4 +19,9 @@ class ElasticSearchSourceCollection extends SourceCollection {
   public String getNiceName() {
     'ElasticSearch'
   }
+
+  public void update(project) {
+    log.debug("ElasticSearchSourceCollection::update(${project})");
+  }
+
 }
