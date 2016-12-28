@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset='utf-8'>
+
+    <title>IIIF Tile Source | OpenSeadragon</title>
+
+    <link rel='stylesheet' 
+          type='text/css'
+          media='screen'
+          href='./style.css'/>
+
+    <script src="./osd/openseadragon.min.js"></script>
+</head>
+
+<body>
+
+ <div style="width:600px; height:400px; border:1px solid black;" id="example-inline-configuration-for-iiif" class="openseadragon">
+    </div>
+
+<script type="text/javascript">
+    OpenSeadragon({
+        id:                 "example-inline-configuration-for-iiif",
+        preserveViewport:   true,
+        visibilityRatio:    1,
+        prefixUrl:          "osd/images/",
+        minZoomLevel:       1,
+        defaultZoomLevel:   1,
+        sequenceMode:       true,
+        tileSources:   [ 
+
+{
+				  "@id":"http://dams.llgc.org.uk/iiif/2.0/4004562/res/4004625.jpg",
+                                  "protocol": "http://iiif.io/api/image",
+				  "service": {
+  				        "@context": "http://iiif.io/api/image/2/context.json",
+						  "@id":"http://dams.llgc.org.uk/iiif/2.0/image/4004625",
+							"profile":"http://library.stanford.edu/iiif/image-api/compliance.html#level1",
+							"height":5524,
+							"width":3600,
+							"tiles" : [{
+											"width": 256,"height": 256,
+											"scaleFactors": [ 1, 2, 4, 8, 16, 32 ]
+							}]
+			    },
+			    "height":5524,
+                "width":3600
+			 }
+
+                       ]
+    });
+</script>
+
+				  "format":"image/jpeg",
+				  "@type":"dctypes:Image",
+
+</body>
+</html>

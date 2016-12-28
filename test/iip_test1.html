@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset='utf-8'>
+
+    <title>IIIF Tile Source | OpenSeadragon</title>
+
+    <link rel='stylesheet' 
+          type='text/css'
+          media='screen'
+          href='./style.css'/>
+
+    <script src="./osd/openseadragon.min.js"></script>
+</head>
+
+<body>
+
+ <div style="width:600px; height:400px; border:1px solid black;" id="example-inline-configuration-for-iiif" class="openseadragon">
+    </div>
+
+<script type="text/javascript">
+    OpenSeadragon({
+        id:                 "example-inline-configuration-for-iiif",
+        preserveViewport:   true,
+        visibilityRatio:    1,
+        prefixUrl:          "osd/images/",
+        minZoomLevel:       1,
+        defaultZoomLevel:   1,
+        sequenceMode:       true,
+        tileSources:   [{
+          "@context": "http://iiif.io/api/image/2/context.json",
+          "@id": "https://libimages1.princeton.edu/loris/pudl0001%2F4609321%2Fs42%2F00000001.jp2",
+          "height": 7200,
+          "width": 5233,
+          "profile": [ "http://iiif.io/api/image/2/level2.json" ],
+          "protocol": "http://iiif.io/api/image",
+          "tiles": [{
+            "scaleFactors": [ 1, 2, 4, 8, 16, 32 ],
+            "width": 1024
+          }]
+        },{
+          "@context": "http://iiif.io/api/image/2/context.json",
+          "@id": "https://libimages1.princeton.edu/loris/pudl0001%2F4609321%2Fs42%2F00000002.jp2",
+          "height": 7200,
+          "width": 5093,
+          "profile": [ "http://iiif.io/api/image/2/level2.json" ],
+          "protocol": "http://iiif.io/api/image",
+          "tiles": [{
+            "scaleFactors": [ 1, 2, 4, 8, 16, 32 ],
+            "width": 1024
+          }]
+        },{
+          "@context": "http://iiif.io/api/image/2/context.json",
+          "@id": "https://libimages1.princeton.edu/loris/pudl0001%2F4609321%2Fs42%2F00000003.jp2",
+          "height": 7200,
+          "width": 5387,
+          "profile": [ "http://iiif.io/api/image/2/level2.json" ],
+          "protocol": "http://iiif.io/api/image",
+          "tiles": [{
+            "scaleFactors": [ 1, 2, 4, 8, 16, 32 ],
+            "width": 1024
+          }]
+        },{
+          "@context": "http://iiif.io/api/image/2/context.json",
+          "@id": "https://libimages1.princeton.edu/loris/pudl0001%2F4609321%2Fs42%2F00000004.jp2",
+          "height": 7200,
+          "width": 5434,
+          "profile": [ "http://iiif.io/api/image/2/level2.json" ],
+          "protocol": "http://iiif.io/api/image",
+          "tiles": [{
+            "scaleFactors": [ 1, 2, 4, 8, 16, 32 ],
+            "width": 1024
+          }]
+        }]
+    });
+</script>
+
+
+</body>
+</html>
