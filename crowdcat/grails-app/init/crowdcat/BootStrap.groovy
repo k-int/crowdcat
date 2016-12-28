@@ -11,8 +11,14 @@ class BootStrap {
 
     setUpUserAccounts()
  
-    def default_uni = SourceCollection.findByName('default') ?: new ElasticSearchSourceCollection(name:'default', 
+    def default_src = SourceCollection.findByName('default') ?: new ElasticSearchSourceCollection(name:'default', 
                                                                                                   esUrl:'http://151.252.2.199:9200/ra/_search?q=object.multimedia.processed.zoom.location:*').save(flush:true, failOnError:true);
+
+    def static_file_src = SourceCollection.findByName('wales_test_cases') ?: new TSVSourceCollection(name:'wales_test_cases',
+                                                                                                     filepath:'wales_test_cases.tsv').save(flush:true, failOnError:true);
+
+    def wales_test_proj = Project.findByName('Wales test 1')?: new Project(name:'Wales test 1').save(flush:true, failOnError:true)
+    
   }
 
   def destroy = {
