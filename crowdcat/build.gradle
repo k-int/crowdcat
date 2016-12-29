@@ -59,8 +59,8 @@ dependencies {
     compile 'org.apache.jena:jena-spatial:1.0.1'
     compile 'org.apache.jena:jena-security:2.11.2'
     compile 'org.apache.jena:jena-text:1.0.1'
-    compile 'virtuoso:virtjena:2'
-    compile 'virtuoso:virtjdbc:4.1'
+    // compile 'virtuoso:virtjena:2'
+    // compile 'virtuoso:virtjdbc:4.1'
 
     profile "org.grails.profiles:web"
     runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.11.6"
