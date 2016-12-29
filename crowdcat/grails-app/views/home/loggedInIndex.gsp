@@ -7,7 +7,6 @@
     <title></title>
     <style type="text/css">
      #embeddedViewer {
-       width: 100%;
        height: 700px;
      }
     </style>
