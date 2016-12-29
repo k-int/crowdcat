@@ -1,11 +1,10 @@
 // Viewer.js for mirador version
 
-//= require application.js
 //= require mirador/mirador.min.js
 
 $(function() {
   myMiradorInstance = Mirador({
-    id: "viewer",
+    id: "embeddedViewer",
     layout: "1x1",
     buildPath: "assets/mirador/",
     data: [

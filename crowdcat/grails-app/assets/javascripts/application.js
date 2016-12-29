@@ -7,7 +7,6 @@
 //
 //= require jquery-2.2.0.min
 //= require bootstrap
-//= require_tree .
 //= require_self
 
 if (typeof jQuery !== 'undefined') {
@@ -21,11 +20,13 @@ if (typeof jQuery !== 'undefined') {
         // Javascript to enable link to tab
         var hash = document.location.hash;
         if (hash) {
+            console.log(hash);
             $('.nav-tabs a[href="'+hash+'"]').tab('show');
         } 
 
         // Change hash for page-reload
         $('.nav-tabs a').on('shown.bs.tab', function (e) {
+            console.log("update nav %s",e.target.hash);
             window.location.hash = e.target.hash;
         });
 

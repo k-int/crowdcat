@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title></title>
     <style type="text/css">
-     #viewer {
+     #embeddedViewer {
        width: 100%;
        height: 700px;
      }
@@ -28,7 +28,7 @@
           <li role="navigation" class="active"><a data-toggle="tab" href="#overview">Overview</a></li>
           <li role="navigation"><a data-toggle="tab" href="#sourceCollections">Source Collections</a></li>
           <li role="navigation"><a data-toggle="tab" href="#projects">Projects</a></li>
-          <li role="navigation" class="pull-right"><a data-toggle="tab" href="#resourceViewer">Viewer</a></li>
+          <li role="navigation" class="pull-right"><a data-toggle="tab" href="#trv">Viewer</a></li>
         </ul>
 
         <div class="tab-content">
@@ -76,7 +76,7 @@
             </table>
           </div>
 
-          <div id="resourceViewer" class="tab-pane">
+          <div id="trv" class="tab-pane">
             <h3>Resource Viewer</h3>
             <g:form action="resourceViewer">
               <div class="input-group">
@@ -85,7 +85,8 @@
               </div>
             </g:form>
 
-            <div id="viewer">
+            <div>
+              <div id="embeddedViewer"></div>
             </div>
 
           </div>
@@ -96,7 +97,9 @@
     </div>
   </div>
 
-  <asset:javascript src="viewer.js"/>
-
 </body>
 </html>
+
+<content tag="footScripts">
+  <asset:javascript src="viewer.js"/>
+</content>
