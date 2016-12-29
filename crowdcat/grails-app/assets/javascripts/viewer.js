@@ -17,7 +17,10 @@ $(function() {
     //   module: "LocalStorageEndpoint" }
     annotationEndpoint: {
       name:"Mirador OA Protocol Endpoint Storage",
-      module: "MiradorOAProtocolEndpoint" 
+      module: "MiradorOAProtocolEndpoint",
+      options : {
+        oaProtocolEndpoint: "/annotation"
+      }
     }
   });
 });

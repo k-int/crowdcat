@@ -22,7 +22,8 @@
       dfd:             null,
       annotationsList: [],        //OA list for Mirador use
       windowID:        null,
-      eventEmitter:    null
+      eventEmitter:    null,
+      oaProtocolEndpoint: null
     }, options);
 
     this.init();
@@ -42,7 +43,7 @@
 
       //use options.uri
       jQuery.ajax({
-        url: '',
+        url: this.oaProtocolEndpoint,
         type: 'GET',
         dataType: 'json',
         headers: { },
@@ -128,15 +129,17 @@
 
       var _this = this;
       
+      console.log("Posting %o",oaAnnotation);
+
       jQuery.ajax({
-        url: '',
+        url: this.oaProtocolEndpoint,
         type: 'POST',
         dataType: 'json',
-        headers: { },
-        data: '',
+        data: JSON.stringify(oaAnnotation),
         contentType: "application/json; charset=utf-8",
         success: function(data) {
           if (typeof successCallback === "function") {
+            console.log("Success %o",data);
             successCallback(_this.getAnnotationInOA(data));
           }
         },
@@ -159,11 +162,13 @@
     //Convert Endpoint annotation to OA
     getAnnotationInOA: function(annotation) {
       console.log("getAnnotationInOA(%o)",annotation);
+      return annotation;
     },
 
     // Converts OA Annotation to endpoint format
     getAnnotationInEndpoint: function(oaAnnotation) {
       console.log("getAnnotationInEndpoint(%o)",oaAnnotation);
+      return oaAnnotation;
     }
   };
 
