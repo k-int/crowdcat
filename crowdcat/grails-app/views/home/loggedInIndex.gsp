@@ -1,10 +1,17 @@
 <!doctype html>
 <html>
 <head>
+    <meta charset="utf-8">
     <meta name="layout" content="main"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title></title>
-
-    <asset:link rel="icon" href="favicon.ico" type="image/x-ico" />
+    <style type="text/css">
+     #viewer {
+       width: 100%;
+       height: 700px;
+     }
+    </style>
+    <link rel="stylesheet" type="text/css" href="assets/mirador/css/mirador-combined.css">
 </head>
 <body>
   <div class="container-fluid">
@@ -77,7 +84,10 @@
                 <span class="input-group-btn"><button class="btn btn-default">Load</button></span>
               </div>
             </g:form>
-            <div class="uv col-md-12" data-locale="en-GB:English (GB),cy-GB:Cymraeg" data-config="" data-uri="http://dams.llgc.org.uk/iiif/2.0/4004562/manifest.json" data-sequenceindex="0" data-canvasindex="0" data-zoom="" data-rotation="0" style="width:800px; height:600px; background-color: #000"></div>
+
+            <div id="viewer">
+            </div>
+
           </div>
 
         </div>
@@ -86,7 +96,7 @@
     </div>
   </div>
 
-  <asset:javascript id="embedUV" src="uv/lib/embed.js" />
+  <asset:javascript src="viewer.js"/>
 
 </body>
 </html>
