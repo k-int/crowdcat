@@ -85,8 +85,12 @@
               </div>
             </g:form>
 
-            <div>
-              <div id="embeddedViewer"></div>
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-12">
+                  <div id="embeddedViewer"></div>
+                </div>
+              </div>
             </div>
 
           </div>
