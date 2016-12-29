@@ -52,6 +52,16 @@ dependencies {
     compile 'net.sf.opencsv:opencsv:2.0'
     compile 'commons-io:commons-io:2.5'
 
+    compile 'org.apache.jena:jena-tdb:1.0.2'
+    compile 'org.apache.jena:jena-core:2.11.2'
+    compile 'org.apache.jena:jena-arq:2.11.2'
+    compile 'org.apache.jena:jena-iri:1.0.2'
+    compile 'org.apache.jena:jena-spatial:1.0.1'
+    compile 'org.apache.jena:jena-security:2.11.2'
+    compile 'org.apache.jena:jena-text:1.0.1'
+    compile 'virtuoso:virtjena:2'
+    compile 'virtuoso:virtjdbc:4.1'
+
     profile "org.grails.profiles:web"
     runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.11.6"
     runtime "com.h2database:h2"
