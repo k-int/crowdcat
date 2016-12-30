@@ -55,3 +55,16 @@ Some handy bits of SPARQL for seeing what the app does
     ?res <http://www.w3.org/ns/oa#hasTarget> ?target .
     ?target <http://purl.org/dc/terms/isPartOf> <http://dams.llgc.org.uk/iiif/2.0/image/4004625> .
     }
+
+## Include graph (current impl has 1:1 graph with annotation)
+
+    select ?g ?res ?p ?o ?target ?tp ?to
+    where {
+    GRAPH ?g { 
+        ?res ?p ?o .
+        ?target ?tp ?to .
+        ?res a <http://www.w3.org/ns/oa#Annotation> .
+        ?res <http://www.w3.org/ns/oa#hasTarget> ?target .
+        ?target <http://purl.org/dc/terms/isPartOf> <http://dams.llgc.org.uk/iiif/2.0/image/4004625> .
+      }
+    }
