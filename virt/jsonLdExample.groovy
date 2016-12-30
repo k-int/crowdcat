@@ -20,6 +20,7 @@
 // ?s ?p ?o .
 // ?s <http://schema.org/url> <http://www.janedoe.com>
 // } LIMIT 100
+//
 
 import virtuoso.jena.driver.*;
 
