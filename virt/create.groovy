@@ -14,10 +14,15 @@
 
 // Dependency info can be found here:: https://virtuoso.openlinksw.com/dataspace/doc/dav/wiki/Main/VirtJenaProvider
 
+// Tested in http://127.0.0.1:8890/sparql using
+//
+// select ?s ?p ?o where {
+// ?s ?p ?o .
+// ?s a <http://xmlns.com/foaf/0.1/Person> .
+// } LIMIT 100
+
 import virtuoso.jena.driver.*;
-// import com.hp.hpl.jena.query.*;
-// import com.hp.hpl.jena.rdf.model.* ;
-// import com.hp.hpl.jena.graph.*;
+
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.vocabulary.*;
 import org.apache.jena.graph.*;
@@ -65,12 +70,16 @@ try {
   // addUriToGraph(orgUri, foaf_homepage_pred, record.metadata.gokb.org.homepage?.text(),false);
 
   model.begin();
+  println("Model from virt");
+  model.write( System.out, "N-TRIPLE");
 
   Resource r = model.createResource();              
   Resource person_1 = model.createResource("http://ianibbo.me/#", FOAF.Person)
   person_1.addProperty(RDFS.label, model.createLiteral("Ian", "en"))
   person_1.addProperty(RDFS.label, model.createLiteral("Ian Ibbotson", "en"))
 
+  println("Model after processing");
+  model.write( System.out, "N-TRIPLE");
   model.commit();
 
   // model.write( System.out, "N-TRIPLE");
