@@ -20,6 +20,14 @@
 // ?s ?p ?o .
 // ?s a <http://xmlns.com/foaf/0.1/Person> .
 // } LIMIT 100
+//
+//
+// select ?s ?p ?o 
+// FROM <uri://NLWVirtTest1/graph1/>
+// where {
+// ?s ?p ?o .
+// ?s a <http://xmlns.com/foaf/0.1/Person> .
+// } LIMIT 100
 
 import virtuoso.jena.driver.*;
 
