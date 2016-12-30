@@ -37,13 +37,12 @@ import org.apache.http.protocol.*
 import java.nio.charset.Charset
 import static groovy.json.JsonOutput.*
 import virtuoso.jena.driver.*;
-import com.hp.hpl.jena.query.*;
-import com.hp.hpl.jena.rdf.model.* ;
-import com.hp.hpl.jena.graph.*;
+// import com.hp.hpl.jena.query.*;
+// import com.hp.hpl.jena.rdf.model.* ;
+// import com.hp.hpl.jena.graph.*;
 import java.text.SimpleDateFormat
 import groovy.util.slurpersupport.GPathResult
 import org.apache.log4j.*
-import com.k_int.goai.*;
 
 def config_file = new File('crowdcat-config.groovy')
 
@@ -58,7 +57,7 @@ println("Starting...");
 
 try {
   
-  graph = new VirtGraph('uri://gokb.openlibraryfoundation.org/', config.store_uri, "dba", "dba");
+  graph = new VirtGraph('uri://NLWVirtTest1/graph1/', config.store_uri, "dba", "dba");
 
   Node dc_service_type = NodeFactory.createURI('http://purl.org/dc/dcmitype/Service');
   Node dc_collection_type = NodeFactory.createURI('http://purl.org/dc/dcmitype/Collection');
@@ -76,8 +75,8 @@ try {
   Node dc_medium_pred = NodeFactory.createURI('http://purl.org/dc/terms/medium')
   Node bibo_status_pred = NodeFactory.createURI('http://purl.org/ontology/bibo/status');
 
-  addToGraph(orgUri, skos_pref_label_pred, record.metadata.gokb.org.name.text(),false);
-  addUriToGraph(orgUri, foaf_homepage_pred, record.metadata.gokb.org.homepage?.text(),false);
+  // addToGraph(orgUri, skos_pref_label_pred, record.metadata.gokb.org.name.text(),false);
+  // addUriToGraph(orgUri, foaf_homepage_pred, record.metadata.gokb.org.homepage?.text(),false);
 }
 catch ( Exception e ) {
   e.printStackTrace();
