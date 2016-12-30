@@ -68,3 +68,18 @@ Some handy bits of SPARQL for seeing what the app does
         ?target <http://purl.org/dc/terms/isPartOf> <http://dams.llgc.org.uk/iiif/2.0/image/4004625> .
       }
     }
+
+## List all graphs (Annotations in current impl) for identified resource
+
+Done this way initially to make it easy to respond to mirador requests for all annotations against current canvas -- essentially creating 
+a union of these graphs will be the annotation list the server needs to respond with.
+
+    select ?g
+    where {
+    GRAPH ?g { 
+        ?res a <http://www.w3.org/ns/oa#Annotation> .
+        ?res <http://www.w3.org/ns/oa#hasTarget> ?target .
+        ?target <http://purl.org/dc/terms/isPartOf> <http://dams.llgc.org.uk/iiif/2.0/image/4004625> .
+      }
+    }
+
