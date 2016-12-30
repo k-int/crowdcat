@@ -83,3 +83,18 @@ a union of these graphs will be the annotation list the server needs to respond 
       }
     }
 
+
+## List annotation ID, Content of annotation, Source (effectively canvas) and Selector for any annotations part of image 4004625
+
+
+    select ?res ?content ?source ?selectorValue
+    where {
+    ?body <http://www.w3.org/2011/content#chars> ?content .
+    ?res <http://www.w3.org/ns/oa#hasBody> ?body .
+    ?res a <http://www.w3.org/ns/oa#Annotation> .
+    ?res <http://www.w3.org/ns/oa#hasTarget> ?target .
+    ?target <http://purl.org/dc/terms/isPartOf> <http://dams.llgc.org.uk/iiif/2.0/image/4004625> .
+    ?target <http://www.w3.org/ns/oa#hasSelector> ?selector .
+    ?target <http://www.w3.org/ns/oa#hasSource> ?source .
+    ?selector <http://www.w3.org/1999/02/22-rdf-syntax-ns#value> ?selectorValue .
+    }

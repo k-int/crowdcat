@@ -47,38 +47,50 @@ class AnnotationController {
   def index() {
     log.debug("annotation::index");
 
-    if ( request.method=='POST' ) {
-      log.debug("Create Annotation ${params}");
+    def graph=null;
+    try {
+      if ( request.method=='POST' ) {
+        log.debug("Create Annotation ${params}");
+  
+        String annotation_json_str = request.JSON?.toString()
+  
+        def annot_id =java.util.UUID.randomUUID().toString();
+  
+        def config = [
+          store_uri:'jdbc:virtuoso://localhost:1111'
+        ]
 
-      String annotation_json_str = request.JSON?.toString()
+        graph = new VirtGraph('uri://crowdcat/annotation/'+annot_id, config.store_uri, "dba", "dba");
 
-      def annot_id =java.util.UUID.randomUUID().toString();
+        // Model model = ModelFactory.createDefaultModel();
+        Model model = ModelFactory.createModelForGraph(graph)
 
-      def config = [
-        store_uri:'jdbc:virtuoso://localhost:1111'
-      ]
+        model.begin();
+        println("Model from virt");
+        model.write( System.out, "N-TRIPLE");
 
-      def graph = new VirtGraph('uri://crowdcat/annotation/'+annot_id, config.store_uri, "dba", "dba");
+        // Resource annotation = model.createResource("http://crowdcat/annotation/"+annot_id, FOAF.Person)
+        // person_1.addProperty(RDFS.label, model.createLiteral("Ian", "en"))
+        // person_1.addProperty(RDFS.label, model.createLiteral("Ian Ibbotson", "en"))
 
-      // Model model = ModelFactory.createDefaultModel();
-      Model model = ModelFactory.createModelForGraph(graph)
+        org.apache.jena.riot.RDFDataMgr.read(model, new StringReader(annotation_json_str), 'eng', Lang.JSONLD);
 
-      model.begin();
-      println("Model from virt");
-      model.write( System.out, "N-TRIPLE");
-
-      // Resource annotation = model.createResource("http://crowdcat/annotation/"+annot_id, FOAF.Person)
-      // person_1.addProperty(RDFS.label, model.createLiteral("Ian", "en"))
-      // person_1.addProperty(RDFS.label, model.createLiteral("Ian Ibbotson", "en"))
-
-      org.apache.jena.riot.RDFDataMgr.read(model, new StringReader(annotation_json_str), 'eng', Lang.JSONLD);
-
-      println("Model after processing");
-      model.write( System.out, "N-TRIPLE");
-      model.commit();
+        println("Model after processing");
+        model.write( System.out, "N-TRIPLE");
+        model.commit();
+      }
+      else {
+        log.debug("Get ${params}");
+      }
     }
-    else {
-      log.debug("Get ${params}");
+    catch ( Exception e ) {
+      log.error("Problem",e);
+      e.printStackTrace()
+    }
+    finally {
+      if ( graph ) {
+        graph.close()
+      }
     }
 
     def result = [:]
