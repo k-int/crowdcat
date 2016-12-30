@@ -17,6 +17,10 @@ Usually these are set in a script that wraps the start command
 
 Some handy bits of SPARQL for seeing what the app does
 
+# Setup
+
+This GIST is handy:: https://gist.github.com/ianibo/0670970fccc7f424924f
+
 ## SPARQL to list what we know about http://dams.llgc.org.uk/iiif/2.0/image/4004625 (It's a target)
   
     select ?s ?p ?o 
