@@ -45,3 +45,13 @@ Some handy bits of SPARQL for seeing what the app does
     ?target <http://purl.org/dc/terms/isPartOf> <http://dams.llgc.org.uk/iiif/2.0/image/4004625> .
     }
 
+## Bit more volumous -- props we will use when assembling an annotation to send back to mirador
+
+    select ?res ?p ?o ?target ?tp ?to
+    where {
+    ?res ?p ?o .
+    ?target ?tp ?to .
+    ?res a <http://www.w3.org/ns/oa#Annotation> .
+    ?res <http://www.w3.org/ns/oa#hasTarget> ?target .
+    ?target <http://purl.org/dc/terms/isPartOf> <http://dams.llgc.org.uk/iiif/2.0/image/4004625> .
+    }
