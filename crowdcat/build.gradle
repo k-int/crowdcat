@@ -53,11 +53,11 @@ dependencies {
     compile 'net.sf.opencsv:opencsv:2.0'
     compile 'commons-io:commons-io:2.5'
 
-    compile 'org.apache.jena:jena-core:3.0.1'
-    compile 'org.apache.jena:jena-arq:3.0.1'
-    compile 'org.apache.jena:jena-iri:3.0.1'
-    compile 'org.apache.jena:jena-spatial:3.0.1'
-    compile 'org.apache.jena:jena-text:3.0.1'
+    compile 'org.apache.jena:jena-core:3.1.1'
+    compile 'org.apache.jena:jena-arq:3.1.1'
+    compile 'org.apache.jena:jena-iri:3.1.1'
+    compile 'org.apache.jena:jena-spatial:3.1.1'
+    compile 'org.apache.jena:jena-text:3.1.1'
     compile 'virtuoso:virtjena:3'
     compile 'virtuoso:virtjdbc:4.1'
 
