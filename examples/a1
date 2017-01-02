@@ -1,0 +1,98 @@
+What we send
+
+{
+	"@context": "http://iiif.io/api/presentation/2/context.json",
+	"@type": "oa:Annotation",
+	"motivation": ["oa:commenting"],
+	"resource": [{
+		"@type": "dctypes:Text",
+		"format": "text/html",
+		"chars": "<p>John Daniel Jones</p>"
+	}],
+	"on": {
+		"@type": "oa:SpecificResource",
+		"full": "http://dams.llgc.org.uk/iiif/2.0/image/4004625/sequence/1/canvas/1",
+		"selector": {
+			"@type": "oa:SvgSelector",
+			"value": "<svg xmlns='http://www.w3.org/2000/svg'><path xmlns=\"http://www.w3.org/2000/svg\" d=\"M1018.48385,1714.27484l507.62638,0l0,0l507.62638,0l0,62.55959l0,62.55959l-507.62638,0l-507.62638,0l0,-62.55959z\" data-paper-data=\"{&quot;defaultStrokeValue&quot;:1,&quot;editStrokeValue&quot;:5,&quot;currentStrokeValue&quot;:1,&quot;rotation&quot;:0,&quot;deleteIcon&quot;:null,&quot;rotationIcon&quot;:null,&quot;group&quot;:null,&quot;editable&quot;:true,&quot;annotation&quot;:null}\" id=\"rectangle_0a74c410-3795-44ba-9da5-30aee28c0f3c\" fill-opacity=\"0\" fill=\"#00bfff\" fill-rule=\"nonzero\" stroke=\"#00bfff\" stroke-width=\"3.57483\" stroke-linecap=\"butt\" stroke-linejoin=\"miter\" stroke-miterlimit=\"10\" stroke-dasharray=\"\" stroke-dashoffset=\"0\" font-family=\"sans-serif\" font-weight=\"normal\" font-size=\"12\" text-anchor=\"start\" style=\"mix-blend-mode: normal\"/></svg>"
+		},
+		"within": {
+			"@id": "http://dams.llgc.org.uk/iiif/2.0/image/4004625",
+			"@type": "sc:Manifest"
+		}
+	}
+}
+
+
+
+
+
+What we're getting back from virt atm
+
+
+{
+  "@graph" : [ {
+    "@id" : "_:b0",
+    "@type" : "http://purl.org/dc/dcmitype/Text",
+    "http://purl.org/dc/elements/1.1/format" : "text/html",
+    "http://www.w3.org/2011/content#chars" : "<p>Daniel Jones</p>"
+  }, {
+    "@id" : "_:b1",
+    "@type" : "http://www.w3.org/ns/oa#Annotation",
+    "hasBody" : "_:b0",
+    "hasTarget" : "_:b2",
+    "motivatedBy" : "http://www.w3.org/ns/oa#commenting"
+  }, {
+    "@id" : "_:b2",
+    "@type" : "http://www.w3.org/ns/oa#SpecificResource",
+    "isPartOf" : "http://dams.llgc.org.uk/iiif/2.0/image/4004625",
+    "hasSelector" : "_:b3",
+    "hasSource" : "http://dams.llgc.org.uk/iiif/2.0/image/4004625/sequence/1/canvas/1"
+  }, {
+    "@id" : "_:b3",
+    "@type" : "http://www.w3.org/ns/oa#SvgSelector",
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#value" : "<svg xmlns='http://www.w3.org/2000/svg'><path xmlns=\"http://www.w3.org/2000/svg\" d=\"M1008.03383,1276.07063l416.11064,0l0,0l416.11064,0l0,68.63681l0,68.63681l-416.11064,0l-416.11064,0l0,-68.63681z\" data-paper-data=\"{&quot;defaultStrokeValue&quot;:1,&quot;editStrokeValue&quot;:5,&quot;currentStrokeValue&quot;:1,&quot;rotation&quot;:0,&quot;deleteIcon&quot;:null,&quot;rotationIcon&quot;:null,&quot;group&quot;:null,&quot;editable&quot;:true,&quot;annotation&quot;:null}\" id=\"rectangle_277f9527-e665-41dc-9634-a38967d74004\" fill-opacity=\"0\" fill=\"#00bfff\" fill-rule=\"nonzero\" stroke=\"#00bfff\" stroke-width=\"4.2898\" stroke-linecap=\"butt\" stroke-linejoin=\"miter\" stroke-miterlimit=\"10\" stroke-dasharray=\"\" stroke-dashoffset=\"0\" font-family=\"sans-serif\" font-weight=\"normal\" font-size=\"12\" text-anchor=\"start\" style=\"mix-blend-mode: normal\"/></svg>"
+  }, {
+    "@id" : "http://dams.llgc.org.uk/iiif/2.0/image/4004625",
+    "@type" : "http://iiif.io/api/presentation/2#Manifest"
+  } ],
+  "@context" : {
+    "chars" : {
+      "@id" : "http://www.w3.org/2011/content#chars",
+      "@type" : "http://www.w3.org/2001/XMLSchema#string"
+    },
+    "format" : {
+      "@id" : "http://purl.org/dc/elements/1.1/format",
+      "@type" : "http://www.w3.org/2001/XMLSchema#string"
+    },
+    "motivatedBy" : {
+      "@id" : "http://www.w3.org/ns/oa#motivatedBy",
+      "@type" : "@id"
+    },
+    "hasTarget" : {
+      "@id" : "http://www.w3.org/ns/oa#hasTarget",
+      "@type" : "@id"
+    },
+    "hasBody" : {
+      "@id" : "http://www.w3.org/ns/oa#hasBody",
+      "@type" : "@id"
+    },
+    "hasSource" : {
+      "@id" : "http://www.w3.org/ns/oa#hasSource",
+      "@type" : "@id"
+    },
+    "hasSelector" : {
+      "@id" : "http://www.w3.org/ns/oa#hasSelector",
+      "@type" : "@id"
+    },
+    "isPartOf" : {
+      "@id" : "http://purl.org/dc/terms/isPartOf",
+      "@type" : "@id"
+    },
+    "value" : {
+      "@id" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#value",
+      "@type" : "http://www.w3.org/2001/XMLSchema#string"
+    }
+  }
+}
+

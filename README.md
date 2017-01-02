@@ -21,6 +21,16 @@ Some handy bits of SPARQL for seeing what the app does
 
 This GIST is handy:: https://gist.github.com/ianibo/0670970fccc7f424924f
 
+# WARNING
+
+The Jena / virtuoso libraries seem to do some clever bytecode manipulation and caching -- and does not seem to 
+survive the groovy dynamic reloading process. Be wary of exceptions like
+
+    org.apache.jena.shared.JenaException: java.lang.IllegalStateException: The type registry TypeRegistry(id=778613057,loader=sun.misc.Launcher$AppClassLoader) does not know about type id 3883
+
+that indicate reloading is out of sync with the library. Full app restart is needed in this case.
+
+
 # Some handy sparql
 
 Virtuoso should be ruunning a web SPARQL endpont at http://localhost:8890/sparql. Here are some queries to try out

@@ -121,6 +121,33 @@ where {
                       res_body.toString() + ' ' + 
                       res_source.toString() + ' ' + 
                       res_content.toString())
+
+            def annotation_graph = new VirtGraph(res_graph.toString(), config.store_uri, "dba", "dba");
+            log.debug("Got res graph");
+            def annotation_model = ModelFactory.createModelForGraph(annotation_graph);
+            // org.apache.jena.riot.RDFDataMgr.write(System.out, annotation_model, Lang.JSONLD);
+            // org.apache.jena.riot.RDFDataMgr.write(System.out, annotation_model, org.apache.jena.riot.RDFFormat.JSONLD_PRETTY );
+            log.debug("As N3");
+
+            // We handle this as a 2 step process. Something in vert is adding an "sql" IRI to the model and this is causing a cycle
+            // in the JSON-LD output. We go trhough n3 as a neutral format to clear out any unwanted storage model shennanagins.
+
+            // Convert the model we got back from virt into n3
+            StringWriter n3_model_sw = new StringWriter()
+            org.apache.jena.riot.RDFDataMgr.write(n3_model_sw, annotation_model, org.apache.jena.riot.RDFFormat.NTRIPLES_UTF8 );
+            def annotation_as_n3 = n3_model_sw.toString();
+            annotation_graph.close();
+            
+            log.debug("Model as n3 ${annotation_as_n3}");
+          
+            def stand_alone_model = ModelFactory.createDefaultModel()
+
+            org.apache.jena.riot.RDFDataMgr.read(stand_alone_model, new StringReader(annotation_as_n3), 'eng', Lang.N3);
+
+  
+            // log.debug("As JSONLD");
+            org.apache.jena.riot.RDFDataMgr.write(System.out, stand_alone_model, Lang.JSONLD);
+
           }
         }
 
