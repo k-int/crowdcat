@@ -21,6 +21,29 @@ Some handy bits of SPARQL for seeing what the app does
 
 This GIST is handy:: https://gist.github.com/ianibo/0670970fccc7f424924f
 
+# Some handy sparql
+
+Virtuoso should be ruunning a web SPARQL endpont at http://localhost:8890/sparql. Here are some queries to try out
+after creating some annotations...
+
+## Annotations on a given canvas
+
+This is the root of the query that drives the mirador <-> OA annotation server GET request for annotations present on
+a given canvas. The app actually only needs the graph as each graph is serialised and added to the response, but the
+query itself is a useful tool for devs to copy into http://localhost:8890/sparql to see how their annotations look in the DB
+
+select ?graph ?annotation ?target ?body ?source ?content
+where {
+  GRAPH ?graph { 
+    ?annotation <http://www.w3.org/ns/oa#hasTarget> ?target .
+    ?target <http://www.w3.org/ns/oa#hasSource> <http://dams.llgc.org.uk/iiif/2.0/image/4004625/sequence/1/canvas/1> .
+    ?annotation <http://www.w3.org/ns/oa#hasBody> ?body .
+    ?target <http://www.w3.org/ns/oa#hasSource> ?source .
+    ?body <http://www.w3.org/2011/content#chars> ?content .
+  }
+}
+	
+
 ## SPARQL to list what we know about http://dams.llgc.org.uk/iiif/2.0/image/4004625 (It's a target)
   
     select ?s ?p ?o 

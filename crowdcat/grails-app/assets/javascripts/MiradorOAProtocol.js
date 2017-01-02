@@ -47,7 +47,7 @@
         type: 'GET',
         dataType: 'json',
         headers: { },
-        data: { },
+        data: options,
         contentType: "application/json; charset=utf-8",
         success: function(data) {
           //check if a function has been passed in, otherwise, treat it as a normal search

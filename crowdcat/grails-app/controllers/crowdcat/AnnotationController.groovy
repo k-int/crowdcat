@@ -10,7 +10,8 @@ import org.apache.jena.graph.*;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.sparql.vocabulary.FOAF;
-import org.apache.jena.riot.Lang
+import org.apache.jena.riot.Lang;
+import org.apache.jena.query.*;
 
 
 /**
@@ -41,13 +42,32 @@ class AnnotationController {
   def springSecurityService
   def resourceAgentService
 
+  public static ANNOTATIONS_QRY_1 = '''
+select ?graph ?annotation ?target ?body ?source ?content
+where {
+  GRAPH ?graph { 
+    ?annotation <http://www.w3.org/ns/oa#hasTarget> ?target .
+    ?target <http://www.w3.org/ns/oa#hasSource> <http://dams.llgc.org.uk/iiif/2.0/image/4004625/sequence/1/canvas/1> .
+    ?annotation <http://www.w3.org/ns/oa#hasBody> ?body .
+    ?target <http://www.w3.org/ns/oa#hasSource> ?source .
+    ?body <http://www.w3.org/2011/content#chars> ?content .
+  }
+}
+'''
+
   /**
    *
    */
   def index() {
     log.debug("annotation::index");
+    def result = null;
 
     def graph=null;
+
+    def config = [
+      store_uri:'jdbc:virtuoso://localhost:1111'
+    ]
+
     try {
       if ( request.method=='POST' ) {
         log.debug("Create Annotation ${params}");
@@ -56,10 +76,6 @@ class AnnotationController {
   
         def annot_id =java.util.UUID.randomUUID().toString();
   
-        def config = [
-          store_uri:'jdbc:virtuoso://localhost:1111'
-        ]
-
         graph = new VirtGraph('uri://crowdcat/annotation/'+annot_id, config.store_uri, "dba", "dba");
 
         // Model model = ModelFactory.createDefaultModel();
@@ -78,9 +94,40 @@ class AnnotationController {
         println("Model after processing");
         model.write( System.out, "N-TRIPLE");
         model.commit();
+
+        result=[status:'OK'];
       }
       else {
         log.debug("Get ${params}");
+        // If we have been passed a uri
+        if ( params.uri && ( params.uri.trim().length() > 0 ) ) {
+          // Lets find all annotations -- create a new graph with no default graph == Everything
+          graph = new VirtGraph(null, config.store_uri, "dba", "dba");
+          Query sparql = QueryFactory.create(ANNOTATIONS_QRY_1);
+          VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, graph);
+          ResultSet results = vqe.execSelect();
+          while (results.hasNext()) {
+            QuerySolution q_result = results.nextSolution();
+            // select ?graph ?annotation ?target ?body ?source ?content
+            RDFNode res_graph = q_result.get("graph");
+            RDFNode res_annotation = q_result.get("annotation");
+            RDFNode res_target = q_result.get("target");
+            RDFNode res_body = q_result.get("body");
+            RDFNode res_source = q_result.get("source");
+            RDFNode res_content = q_result.get("content");
+            log.debug(res_graph.toString() + ' ' + 
+                      res_annotation.toString() + ' ' + 
+                      res_target.toString() + ' ' + 
+                      res_body.toString() + ' ' + 
+                      res_source.toString() + ' ' + 
+                      res_content.toString())
+          }
+        }
+
+        // Mirador expects a JS array of annotation graphs as a result object
+        result = []
+
+  
       }
     }
     catch ( Exception e ) {
@@ -93,7 +140,6 @@ class AnnotationController {
       }
     }
 
-    def result = [:]
     render result as JSON
   }
 
