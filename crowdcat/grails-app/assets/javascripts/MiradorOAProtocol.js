@@ -162,7 +162,14 @@
     //Convert Endpoint annotation to OA
     getAnnotationInOA: function(annotation) {
       console.log("getAnnotationInOA(%o)",annotation);
-      return annotation;
+      var result = {}
+      result."@type"="oa:Annotation";
+
+      result.motivation=''=['oa:commenting'];
+      result.resource={};
+      result.on={};
+
+      return result;
     },
 
     // Converts OA Annotation to endpoint format
