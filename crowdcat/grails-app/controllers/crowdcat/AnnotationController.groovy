@@ -63,11 +63,9 @@ where {
 }
 '''
 
-  // Yes - this is fugly!!! -- http://iiif.io/api/presentation/2/context.json
 
-
-  public static String annotations_context = '''
-{
+  // This is the standard W3C Annotations context
+  public static String annotations_context = ''' {
     "oa":      "http://www.w3.org/ns/oa#",
     "dc":      "http://purl.org/dc/elements/1.1/",
     "dcterms": "http://purl.org/dc/terms/",
@@ -189,19 +187,13 @@ where {
     "end":           {"@id": "oa:end", "@type": "xsd:nonNegativeInteger"},
     "total":         {"@id": "as:totalItems", "@type": "xsd:nonNegativeInteger"},
     "startIndex":    {"@id": "as:startIndex", "@type": "xsd:nonNegativeInteger"}
-  }
-'''
+  } '''
 
-  public Map annotations_context_map = [
-                  'oa' : 'http://www.w3.org/ns/oa#',
-                  'id' : [ '@type':'@id', '@id':'@id' ],
-                'type' : [ '@type':'@id', '@id':'@type' ],
-          'Annotation' : [ '@type':'@id', '@id':'oa:Annotation'],
-    'SpecificResource' : [ '@type':'@id', '@id':'oa:SpecificResource'],
-                  'on' : [ '@type':'@id', '@id':'oa:hasTarget' ],
-          'motivation' : [ '@type':'@id', '@id':'oa:hasMotivation' ],
-                 'full': [ '@type':'@id', '@id':'oa:hasSource' ]
-  ]
+  // http://json-ld.org/spec/latest/json-ld-framing/
+  public static String frame = ''' {
+  "@context" : '''+annotations_context+''',
+  "@type" : "http://www.w3.org/ns/oa#Annotation"
+} ''';
 
   /**
    *
@@ -289,9 +281,9 @@ where {
             log.debug("Model as n3\n${annotation_as_n3}");
           
             def stand_alone_model = ModelFactory.createDefaultModel()
-            stand_alone_model.setNsPrefix('ex', 'http://www.ex.com/');
-            stand_alone_model.setNsPrefix('sh', 'http://schema.org/');
-            stand_alone_model.setNsPrefix('oa', 'http://www.w3.org/ns/oa#');
+            // stand_alone_model.setNsPrefix('ex', 'http://www.ex.com/');
+            // stand_alone_model.setNsPrefix('sh', 'http://schema.org/');
+            // stand_alone_model.setNsPrefix('oa', 'http://www.w3.org/ns/oa#');
 
             org.apache.jena.riot.RDFDataMgr.read(stand_alone_model, new StringReader(annotation_as_n3), 'eng', Lang.N3);
 
@@ -301,11 +293,8 @@ where {
             StringWriter ld_sw = new StringWriter()
 
             // See :: https://github.com/apache/jena/blob/master/jena-arq/src-examples/arq/examples/riot/ExJsonLD.java
-            // WriterDatasetRIOT w = RDFDataMgr.createDatasetWriter(RDFFormat.JSONLD_FRAME_PRETTY)
-            WriterDatasetRIOT w = RDFDataMgr.createDatasetWriter(RDFFormat.JSONLD_COMPACT_PRETTY)
-            // WriterDatasetRIOT w = RDFDataMgr.createDatasetWriter(RDFFormat.JSONLD_EXPAND_PRETTY) // Not this one
+            WriterDatasetRIOT w = RDFDataMgr.createDatasetWriter(RDFFormat.JSONLD_FRAME_PRETTY)
             JsonLDWriteContext ctx = new JsonLDWriteContext();
-            ctx.setJsonLDContext(annotations_context);
             JsonLdOptions opts = new JsonLdOptions();
             ctx.setOptions(opts);
             opts.setCompactArrays(false);
@@ -313,9 +302,6 @@ where {
             DatasetGraph dg = DatasetFactory.create(stand_alone_model).asDatasetGraph();
             PrefixMap pm = RiotLib.prefixMap(dg);
 
-            log.debug("prefix map ${pm}");
-
-            String frame = '{"@type" : "http://www.w3.org/ns/oa#Annotation"}';
             ctx.setFrame(frame);
 
             w.write(ld_sw, 
