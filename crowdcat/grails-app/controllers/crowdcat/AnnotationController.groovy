@@ -13,6 +13,13 @@ import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.riot.*;
 import org.apache.jena.query.*;
 
+import org.apache.jena.riot.system.PrefixMap;
+import org.apache.jena.sparql.core.DatasetGraph;
+import org.apache.jena.riot.system.RiotLib;
+
+
+import org.apache.jena.riot.JsonLDWriteContext;
+
 // import com.github.jsonldjava.jena.JenaJSONLD;
 
 /**
@@ -148,9 +155,12 @@ where {
             def annotation_as_n3 = n3_model_sw.toString();
             annotation_graph.close();
             
-            log.debug("Model as n3 ${annotation_as_n3}");
+            log.debug("Model as n3\n${annotation_as_n3}");
           
             def stand_alone_model = ModelFactory.createDefaultModel()
+            // stand_alone_model.setNsPrefix('ex', 'http://www.ex.com/');
+            // stand_alone_model.setNsPrefix('sh', 'http://schema.org/');
+            // stand_alone_model.setNsPrefix('oa', 'http://www.w3.org/ns/oa#');
 
             org.apache.jena.riot.RDFDataMgr.read(stand_alone_model, new StringReader(annotation_as_n3), 'eng', Lang.N3);
 
@@ -159,12 +169,16 @@ where {
             log.debug("As JSONLD");
             StringWriter ld_sw = new StringWriter()
 
+            // See :: https://github.com/apache/jena/blob/master/jena-arq/src-examples/arq/examples/riot/ExJsonLD.java
+
+
             // http://www.programcreek.com/java-api-examples/index.php?api=com.github.jsonldjava.core.JsonLdOptions
             // https://jena.apache.org/documentation/javadoc/arq/org/apache/jena/riot/WriterDatasetRIOT.html
-            WriterDatasetRIOT w = RDFDataMgr.createDatasetWriter(Lang.JSONLD)
+            // WriterDatasetRIOT w = RDFDataMgr.createDatasetWriter(Lang.JSONLD)
+            WriterDatasetRIOT w = RDFDataMgr.createDatasetWriter(RDFFormat.JSONLD_FRAME_PRETTY)
             // https://mavenbrowse.pauldoo.com/central/com/github/jsonld-java/jsonld-java-jena/0.4.1/jsonld-java-jena-0.4.1-test-sources.jar/-/com/github/jsonldjava/jena/ExampleTest.java
             // WriterDatasetRIOT w = RDFDataMgr.createDatasetWriter(JenaJSONLD.JSONLD)
-            org.apache.jena.sparql.util.Context c = new org.apache.jena.sparql.util.Context()
+            // org.apache.jena.sparql.util.Context c = new org.apache.jena.sparql.util.Context()
 
             // https://www.mail-archive.com/commits@jena.apache.org/msg12064.html
             // https://www.mail-archive.com/commits@jena.apache.org/msg12087.html
@@ -173,17 +187,23 @@ where {
             // https://github.com/apache/jena/blob/master/jena-arq/src-examples/arq/examples/riot/ExJsonLD.java
             // c.set(org.apache.jena.sparql.util.Symbol.create('@context'),annotations_context)
             // c.set(org.apache.jena.sparql.util.Symbol.create('JSONLD_CONTEXT'),annotations_context)
-            c.set(org.apache.jena.sparql.util.Symbol.create('@context'),ctx_as_map)
 
-            org.apache.jena.graph.Graph the_graph = stand_alone_model.getGraph()
-            org.apache.jena.riot.system.PrefixMap pm = new org.apache.jena.riot.system.PrefixMapStd()
-            org.apache.jena.sparql.core.DatasetGraph dg = org.apache.jena.sparql.core.DatasetGraphFactory.createOneGraph(the_graph);
+            JsonLDWriteContext ctx = new JsonLDWriteContext();
+            ctx.setJsonLDContext(annotations_context);
+            // c.set(org.apache.jena.sparql.util.Symbol.create('@context'),ctx_as_map)
+
+            // org.apache.jena.graph.Graph the_graph = stand_alone_model.getGraph()
+            DatasetGraph dg = DatasetFactory.create(stand_alone_model).asDatasetGraph();
+            PrefixMap pm = RiotLib.prefixMap(dg);
+
+            String frame = '{"@type" : "http://www.w3.org/ns/oa#Annotation"}';
+            ctx.setFrame(frame);
 
             w.write(ld_sw, 
                     dg,
                     pm,
-                    'http://base', 
-                    c);
+                    null, // 'http://base', 
+                    ctx);
 
             def json_ld = ld_sw.toString();
 
