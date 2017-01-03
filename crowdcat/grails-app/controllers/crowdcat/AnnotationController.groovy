@@ -210,6 +210,8 @@ where {
 
     try {
       if ( request.method=='POST' ) {
+        // NOTE:: when we ingest, we can use the context to figure out how to unpack just about any
+        // valid JSON-LD context. This is neat
         log.debug("Create Annotation ${params}");
   
         String annotation_json_str = request.JSON?.toString()
@@ -238,7 +240,14 @@ where {
         result=[status:'OK'];
       }
       else {
+        // NOTE: But when we respond, in the absence of any negotiated framing, we default back to OA
+        // compaction and framing.
+
         log.debug("Get ${params}");
+
+        // Mirador expects a JS array of annotation graphs as a result object
+        result = []
+
         // If we have been passed a uri
         if ( params.uri && ( params.uri.trim().length() > 0 ) ) {
           // Lets find all annotations -- create a new graph with no default graph == Everything
@@ -311,13 +320,19 @@ where {
                     ctx);
 
             def json_ld = ld_sw.toString();
+            // log.debug("Json LD Version: ${json_ld}");
 
-            log.debug("Json LD Version: ${json_ld}");
+            // FUGLY time
+            def parsed_annotation = JSON.parse(json_ld)
+            if ( parsed_annotation?.'@graph'?.length() > 0 )  {
+              result.add(parsed_annotation.'@graph'[0])
+            }
+            else {
+              log.warn("Unable to parse JSON annotation");
+            }
           }
         }
 
-        // Mirador expects a JS array of annotation graphs as a result object
-        result = []
 
   
       }
