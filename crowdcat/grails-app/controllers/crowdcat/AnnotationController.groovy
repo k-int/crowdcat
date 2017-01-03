@@ -16,7 +16,7 @@ import org.apache.jena.query.*;
 import org.apache.jena.riot.system.PrefixMap;
 import org.apache.jena.sparql.core.DatasetGraph;
 import org.apache.jena.riot.system.RiotLib;
-
+import com.github.jsonldjava.core.JsonLdOptions;
 
 import org.apache.jena.riot.JsonLDWriteContext;
 
@@ -64,12 +64,143 @@ where {
 '''
 
   // Yes - this is fugly!!! -- http://iiif.io/api/presentation/2/context.json
-  public static annotations_context = '''{ "sc": "http://iiif.io/api/presentation/2#", "iiif": "http://iiif.io/api/image/2#", "exif": "http://www.w3.org/2003/12/exif/ns#", "oa": "http://www.w3.org/ns/oa#", "cnt": "http://www.w3.org/2011/content#", "dc": "http://purl.org/dc/elements/1.1/", "dcterms": "http://purl.org/dc/terms/", "dctypes": "http://purl.org/dc/dcmitype/", "doap": "http://usefulinc.com/ns/doap#", "foaf": "http://xmlns.com/foaf/0.1/", "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdfs": "http://www.w3.org/2000/01/rdf-schema#", "xsd": "http://www.w3.org/2001/XMLSchema#", "svcs": "http://rdfs.org/sioc/services#", "as": "http://www.w3.org/ns/activitystreams#", "license": { "@type": "@id", "@id": "dcterms:rights" }, "service": { "@type": "@id", "@id": "svcs:has_service" }, "seeAlso": { "@type": "@id", "@id": "rdfs:seeAlso" }, "within": { "@type": "@id", "@id": "dcterms:isPartOf" }, "profile": { "@type": "@id", "@id": "doap:implements" }, "related": { "@type": "@id", "@id": "dcterms:relation" }, "logo": { "@type": "@id", "@id": "foaf:logo" }, "thumbnail": { "@type": "@id", "@id": "foaf:thumbnail" }, "startCanvas": { "@type": "@id", "@id": "sc:hasStartCanvas" }, "contentLayer": { "@type": "@id", "@id": "sc:hasContentLayer" }, "members": { "@type": "@id", "@id": "sc:hasParts", "@container": "@list" }, "collections": { "@type": "@id", "@id": "sc:hasCollections", "@container": "@list" }, "manifests": { "@type": "@id", "@id": "sc:hasManifests", "@container": "@list" }, "sequences": { "@type": "@id", "@id": "sc:hasSequences", "@container": "@list" }, "canvases": { "@type": "@id", "@id": "sc:hasCanvases", "@container": "@list" }, "resources": { "@type": "@id", "@id": "sc:hasAnnotations", "@container": "@list" }, "images": { "@type": "@id", "@id": "sc:hasImageAnnotations", "@container": "@list" }, "otherContent": { "@type": "@id", "@id": "sc:hasLists", "@container": "@list" }, "structures": { "@type": "@id", "@id": "sc:hasRanges", "@container": "@list" }, "ranges": { "@type": "@id", "@id": "sc:hasRanges", "@container": "@list" }, "metadata": { "@type": "@id", "@id": "sc:metadataLabels", "@container": "@list" }, "description": { "@id": "dc:description" }, "navDate": { "@id": "sc:presentationDate" }, "rendering": { "@id": "dcterms:hasFormat", "@type": "@id" }, "height": { "@type": "xsd:integer", "@id": "exif:height" }, "width": { "@type": "xsd:integer", "@id": "exif:width" }, "attribution": { "@id": "sc:attributionLabel" }, "viewingDirection": { "@id": "sc:viewingDirection", "@type": "@vocab" }, "viewingHint": { "@id": "sc:viewingHint", "@type": "@vocab" }, "left-to-right": { "@id": "sc:leftToRightDirection", "@type": "sc:ViewingDirection" }, "right-to-left": { "@id": "sc:rightToLeftDirection", "@type": "sc:ViewingDirection" }, "top-to-bottom": { "@id": "sc:topToBottomDirection", "@type": "sc:ViewingDirection" }, "bottom-to-top": { "@id": "sc:bottomToTopDirection", "@type": "sc:ViewingDirection" }, "paged": { "@id": "sc:pagedHint", "@type": "sc:ViewingHint" }, "non-paged": { "@id": "sc:nonPagedHint", "@type": "sc:ViewingHint" }, "continuous": { "@id": "sc:continuousHint", "@type": "sc:ViewingHint" }, "individuals": { "@id": "sc:individualsHint", "@type": "sc:ViewingHint" }, "top": { "@id": "sc:topHint", "@type": "sc:ViewingHint" }, "multi-part": { "@id": "sc:multiPartHint", "@type": "sc:ViewingHint" }, "facing-pages": { "@id": "sc:facingPagesHint", "@type": "sc:ViewingHint" }, "motivation": { "@type": "@id", "@id": "oa:motivatedBy" }, "resource": { "@type": "@id", "@id": "oa:hasBody" }, "on": { "@type": "@id", "@id": "oa:hasTarget" }, "full": { "@type": "@id", "@id": "oa:hasSource" }, "selector": { "@type": "@id", "@id": "oa:hasSelector" }, "stylesheet": { "@type": "@id", "@id": "oa:styledBy" }, "style": { "@id": "oa:styleClass" }, "default": { "@type": "@id", "@id": "oa:default" }, "item": { "@type": "@id", "@id": "oa:item" }, "chars": { "@id": "cnt:chars" }, "encoding": { "@id": "cnt:characterEncoding" }, "bytes": { "@id": "cnt:bytes" }, "format": { "@id": "dc:format" }, "language": { "@id": "dc:language" }, "value": { "@id": "rdf:value" }, "label": { "@id": "rdfs:label" }, "first": { "@type": "@id", "@id": "as:first" }, "last": { "@type": "@id", "@id": "as:last" }, "next": { "@type": "@id", "@id": "as:next" }, "prev": { "@type": "@id", "@id": "as:prev" }, "total": { "@id": "as:totalItems" }, "startIndex": { "@id": "as:startIndex" } }'''
 
-  def ctx_as_map = [
-    'sc':'http://iiif.io/api/presentation/2#',
-    'iiif':'http://iiif.io/api/image/2#',
-    'on': [ '@type': '@id', '@id': 'oa:hasTarget' ]
+
+  public static String annotations_context = '''
+{
+    "oa":      "http://www.w3.org/ns/oa#",
+    "dc":      "http://purl.org/dc/elements/1.1/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "dctypes": "http://purl.org/dc/dcmitype/",
+    "foaf":    "http://xmlns.com/foaf/0.1/",
+    "rdf":     "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs":    "http://www.w3.org/2000/01/rdf-schema#",
+    "skos":    "http://www.w3.org/2004/02/skos/core#",
+    "xsd":     "http://www.w3.org/2001/XMLSchema#",
+    "iana":    "http://www.iana.org/assignments/relation/",
+    "owl":     "http://www.w3.org/2002/07/owl#",
+    "as":      "http://www.w3.org/ns/activitystreams#",
+    "schema":  "http://schema.org/",
+
+    "id":      {"@type": "@id", "@id": "@id"},
+    "type":    {"@type": "@id", "@id": "@type"},
+
+    "Annotation":           "oa:Annotation",
+    "Dataset":              "dctypes:Dataset",
+    "Image":                "dctypes:StillImage",
+    "Video":                "dctypes:MovingImage",
+    "Audio":                "dctypes:Sound",
+    "Text":                 "dctypes:Text",
+    "TextualBody":          "oa:TextualBody",
+    "ResourceSelection":    "oa:ResourceSelection",
+    "SpecificResource":     "oa:SpecificResource",
+    "FragmentSelector":     "oa:FragmentSelector",
+    "CssSelector":          "oa:CssSelector",
+    "XPathSelector":        "oa:XPathSelector",
+    "TextQuoteSelector":    "oa:TextQuoteSelector",
+    "TextPositionSelector": "oa:TextPositionSelector",
+    "DataPositionSelector": "oa:DataPositionSelector",
+    "SvgSelector":          "oa:SvgSelector",
+    "RangeSelector":        "oa:RangeSelector",
+    "TimeState":            "oa:TimeState",
+    "HttpRequestState":     "oa:HttpRequestState",
+    "CssStylesheet":        "oa:CssStyle",
+    "Choice":               "oa:Choice",
+    "Person":               "foaf:Person",
+    "Software":             "as:Application",
+    "Organization":         "foaf:Organization",
+    "AnnotationCollection": "as:OrderedCollection",
+    "AnnotationPage":       "as:OrderedCollectionPage",
+    "Audience":             "schema:Audience", 
+
+    "Motivation":    "oa:Motivation",
+    "bookmarking":   "oa:bookmarking",
+    "classifying":   "oa:classifying",
+    "commenting":    "oa:commenting",
+    "describing":    "oa:describing",
+    "editing":       "oa:editing",
+    "highlighting":  "oa:highlighting",
+    "identifying":   "oa:identifying",
+    "linking":       "oa:linking",
+    "moderating":    "oa:moderating",
+    "questioning":   "oa:questioning",
+    "replying":      "oa:replying",
+    "reviewing":     "oa:reviewing",
+    "tagging":       "oa:tagging",
+
+    "auto":          "oa:autoDirection",
+    "ltr":           "oa:ltrDirection",
+    "rtl":           "oa:rtlDirection",
+
+    "body":          {"@type": "@id", "@id": "oa:hasBody"},
+    "target":        {"@type": "@id", "@id": "oa:hasTarget"},
+    "source":        {"@type": "@id", "@id": "oa:hasSource"},
+    "selector":      {"@type": "@id", "@id": "oa:hasSelector"},
+    "state":         {"@type": "@id", "@id": "oa:hasState"},
+    "scope":         {"@type": "@id", "@id": "oa:hasScope"},
+    "refinedBy":     {"@type": "@id", "@id": "oa:refinedBy"},
+    "startSelector": {"@type": "@id", "@id": "oa:hasStartSelector"},
+    "endSelector":   {"@type": "@id", "@id": "oa:hasEndSelector"},
+    "renderedVia":   {"@type": "@id", "@id": "oa:renderedVia"},
+    "creator":       {"@type": "@id", "@id": "dcterms:creator"},
+    "generator":     {"@type": "@id", "@id": "as:generator"},
+    "rights":        {"@type": "@id", "@id": "dcterms:rights"},
+    "homepage":      {"@type": "@id", "@id": "foaf:homepage"},
+    "via":           {"@type": "@id", "@id": "oa:via"},
+    "canonical":     {"@type": "@id", "@id": "oa:canonical"},
+    "stylesheet":    {"@type": "@id", "@id": "oa:styledBy"},
+    "cached":        {"@type": "@id", "@id": "oa:cachedSource"},
+    "conformsTo":    {"@type": "@id", "@id": "dcterms:conformsTo"},
+    "items":         {"@type": "@id", "@id": "as:items", "@container": "@list"},
+    "partOf":        {"@type": "@id", "@id": "as:partOf"},
+    "first":         {"@type": "@id", "@id": "as:first"},
+    "last":          {"@type": "@id", "@id": "as:last"},
+    "next":          {"@type": "@id", "@id": "as:next"},
+    "prev":          {"@type": "@id", "@id": "as:prev"},
+    "audience":      {"@type": "@id", "@id": "schema:audience"},
+    "motivation":    {"@type": "@vocab", "@id": "oa:motivatedBy"},
+    "purpose":       {"@type": "@vocab", "@id": "oa:hasPurpose"},
+    "textDirection": {"@type": "@vocab", "@id": "oa:textDirection"},
+
+    "accessibility": "schema:accessibilityFeature",
+    "bodyValue":     "oa:bodyValue",
+    "format":        "dc:format",
+    "language":      "dc:language",
+    "processingLanguage": "oa:processingLanguage",
+    "value":         "rdf:value",
+    "exact":         "oa:exact",
+    "prefix":        "oa:prefix",
+    "suffix":        "oa:suffix",
+    "styleClass":    "oa:styleClass",
+    "name":          "foaf:name",
+    "email":         "foaf:mbox",
+    "email_sha1":    "foaf:mbox_sha1sum",
+    "nickname":      "foaf:nick",
+    "label":         "rdfs:label",
+
+    "created":       {"@id": "dcterms:created", "@type": "xsd:dateTime"},
+    "modified":      {"@id": "dcterms:modified", "@type": "xsd:dateTime"},
+    "generated":     {"@id": "dcterms:issued", "@type": "xsd:dateTime"},
+    "sourceDate":    {"@id": "oa:sourceDate", "@type": "xsd:dateTime"},
+    "sourceDateStart": {"@id": "oa:sourceDateStart", "@type": "xsd:dateTime"},
+    "sourceDateEnd": {"@id": "oa:sourceDateEnd", "@type": "xsd:dateTime"},
+
+    "start":         {"@id": "oa:start", "@type": "xsd:nonNegativeInteger"},
+    "end":           {"@id": "oa:end", "@type": "xsd:nonNegativeInteger"},
+    "total":         {"@id": "as:totalItems", "@type": "xsd:nonNegativeInteger"},
+    "startIndex":    {"@id": "as:startIndex", "@type": "xsd:nonNegativeInteger"}
+  }
+'''
+
+  public Map annotations_context_map = [
+                  'oa' : 'http://www.w3.org/ns/oa#',
+                  'id' : [ '@type':'@id', '@id':'@id' ],
+                'type' : [ '@type':'@id', '@id':'@type' ],
+          'Annotation' : [ '@type':'@id', '@id':'oa:Annotation'],
+    'SpecificResource' : [ '@type':'@id', '@id':'oa:SpecificResource'],
+                  'on' : [ '@type':'@id', '@id':'oa:hasTarget' ],
+          'motivation' : [ '@type':'@id', '@id':'oa:hasMotivation' ],
+                 'full': [ '@type':'@id', '@id':'oa:hasSource' ]
   ]
 
   /**
@@ -158,9 +289,9 @@ where {
             log.debug("Model as n3\n${annotation_as_n3}");
           
             def stand_alone_model = ModelFactory.createDefaultModel()
-            // stand_alone_model.setNsPrefix('ex', 'http://www.ex.com/');
-            // stand_alone_model.setNsPrefix('sh', 'http://schema.org/');
-            // stand_alone_model.setNsPrefix('oa', 'http://www.w3.org/ns/oa#');
+            stand_alone_model.setNsPrefix('ex', 'http://www.ex.com/');
+            stand_alone_model.setNsPrefix('sh', 'http://schema.org/');
+            stand_alone_model.setNsPrefix('oa', 'http://www.w3.org/ns/oa#');
 
             org.apache.jena.riot.RDFDataMgr.read(stand_alone_model, new StringReader(annotation_as_n3), 'eng', Lang.N3);
 
@@ -170,31 +301,19 @@ where {
             StringWriter ld_sw = new StringWriter()
 
             // See :: https://github.com/apache/jena/blob/master/jena-arq/src-examples/arq/examples/riot/ExJsonLD.java
-
-
-            // http://www.programcreek.com/java-api-examples/index.php?api=com.github.jsonldjava.core.JsonLdOptions
-            // https://jena.apache.org/documentation/javadoc/arq/org/apache/jena/riot/WriterDatasetRIOT.html
-            // WriterDatasetRIOT w = RDFDataMgr.createDatasetWriter(Lang.JSONLD)
-            WriterDatasetRIOT w = RDFDataMgr.createDatasetWriter(RDFFormat.JSONLD_FRAME_PRETTY)
-            // https://mavenbrowse.pauldoo.com/central/com/github/jsonld-java/jsonld-java-jena/0.4.1/jsonld-java-jena-0.4.1-test-sources.jar/-/com/github/jsonldjava/jena/ExampleTest.java
-            // WriterDatasetRIOT w = RDFDataMgr.createDatasetWriter(JenaJSONLD.JSONLD)
-            // org.apache.jena.sparql.util.Context c = new org.apache.jena.sparql.util.Context()
-
-            // https://www.mail-archive.com/commits@jena.apache.org/msg12064.html
-            // https://www.mail-archive.com/commits@jena.apache.org/msg12087.html
-            // file:///home/ibbo/Downloads/apache-jena-3.0.1/javadoc-arq/index.html
-            // http://hcklab.blogspot.co.uk/2014/01/json-ld-jena-and-virtuoso-and-named.html
-            // https://github.com/apache/jena/blob/master/jena-arq/src-examples/arq/examples/riot/ExJsonLD.java
-            // c.set(org.apache.jena.sparql.util.Symbol.create('@context'),annotations_context)
-            // c.set(org.apache.jena.sparql.util.Symbol.create('JSONLD_CONTEXT'),annotations_context)
-
+            // WriterDatasetRIOT w = RDFDataMgr.createDatasetWriter(RDFFormat.JSONLD_FRAME_PRETTY)
+            WriterDatasetRIOT w = RDFDataMgr.createDatasetWriter(RDFFormat.JSONLD_COMPACT_PRETTY)
+            // WriterDatasetRIOT w = RDFDataMgr.createDatasetWriter(RDFFormat.JSONLD_EXPAND_PRETTY) // Not this one
             JsonLDWriteContext ctx = new JsonLDWriteContext();
             ctx.setJsonLDContext(annotations_context);
-            // c.set(org.apache.jena.sparql.util.Symbol.create('@context'),ctx_as_map)
+            JsonLdOptions opts = new JsonLdOptions();
+            ctx.setOptions(opts);
+            opts.setCompactArrays(false);
 
-            // org.apache.jena.graph.Graph the_graph = stand_alone_model.getGraph()
             DatasetGraph dg = DatasetFactory.create(stand_alone_model).asDatasetGraph();
             PrefixMap pm = RiotLib.prefixMap(dg);
+
+            log.debug("prefix map ${pm}");
 
             String frame = '{"@type" : "http://www.w3.org/ns/oa#Annotation"}';
             ctx.setFrame(frame);
