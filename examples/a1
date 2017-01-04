@@ -96,3 +96,34 @@ What we're getting back from virt atm
   }
 }
 
+
+
+
+Here is the framed annotation result
+
+  "@graph" : [ {
+    "id" : "_:b1",
+    "type" : "Annotation",
+    "body" : {
+      "id" : "_:b2",
+      "type" : "Text",
+      "format" : "text/html",
+      "http://www.w3.org/2011/content#chars" : "<p>Signed</p>"
+    },
+    "target" : {
+      "id" : "_:b3",
+      "type" : "SpecificResource",
+      "dcterms:isPartOf" : {
+        "id" : "http://dams.llgc.org.uk/iiif/2.0/image/4004625",
+        "type" : "http://iiif.io/api/presentation/2#Manifest"
+      },
+      "selector" : {
+        "id" : "_:b0",
+        "type" : "SvgSelector",
+        "value" : "<svg xmlns='http://www.w3.org/2000/svg'><path xmlns=\"http://www.w3.org/2000/svg\" d=\"M1743.49432,2648.81818l105,0l0,0l105,0l0,36.81818l0,36.81818l-105,0l-105,0l0,-36.81818z\" data-paper-data=\"{&quot;defaultStrokeValue&quot;:1,&quot;editStrokeValue&quot;:5,&quot;currentStrokeValue&quot;:1,&quot;rotation&quot;:0,&quot;deleteIcon&quot;:null,&quot;rotationIcon&quot;:null,&quot;group&quot;:null,&quot;editable&quot;:true,&quot;annotation&quot;:null}\" id=\"rectangle_a376c0d4-a226-47f5-a1a0-e6266a755f45\" fill-opacity=\"0\" fill=\"#00bfff\" fill-rule=\"nonzero\" stroke=\"#00bfff\" stroke-width=\"0.90909\" stroke-linecap=\"butt\" stroke-linejoin=\"miter\" stroke-miterlimit=\"10\" stroke-dasharray=\"\" stroke-dashoffset=\"0\" font-family=\"sans-serif\" font-weight=\"normal\" font-size=\"12\" text-anchor=\"start\" style=\"mix-blend-mode: normal\"/></svg>"
+      },
+      "source" : "http://dams.llgc.org.uk/iiif/2.0/image/4004625/sequence/1/canvas/1"
+    },
+    "motivation" : "commenting"
+  } ]
+
