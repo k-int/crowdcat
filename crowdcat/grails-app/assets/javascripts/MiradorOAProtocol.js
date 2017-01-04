@@ -162,12 +162,44 @@
     //Convert Endpoint annotation to OA
     getAnnotationInOA: function(annotation) {
       console.log("getAnnotationInOA(%o)",annotation);
-      var result = {}
-      result."@type"="oa:Annotation";
+      var result = {
+        "@context": "http://iiif.io/api/presentation/2/context.json",
+        "@id": "xyz",
+        "@type":"oa:Annotation",
+        "annotatedBy" : { 
+          "@id" : '',
+          "name" : ''},
+        "annotatedAt" : "",
+        "serializedAt" : "",
+        "permissions" : "",
+        "endpoint" : this
+      };
 
-      result.motivation=''=['oa:commenting'];
-      result.resource={};
-      result.on={};
+      result.motivation=['oa:commenting'];
+      result.resource=[{
+        "@type":"dctypes:"+annotation.body.type,
+        "format":annotation.body.format,
+        "chars":annotation.body["http://www.w3.org/2011/content#chars"]
+      }];
+      result.on={
+        "@type":"oa:"+annotation.target["type"],
+        "full":annotation.target.source,
+        "selector":{
+          "@type":"oa:"+annotation.target.selector["type"],
+          "value":annotation.target.selector.value
+          // "@type" : "oa:FragmentSelector",
+          // "value" : "xywh=100,100,400,400"
+        },
+        "within":{
+          "@id":annotation.target["dcterms:isPartOf"]["id"],
+          "@type":"sc:Manifest"
+          // "@type":annotation.target["dcterms:isPartOf"]["type"]
+        }
+      };
+
+      // Stuff gleaned from https://github.com/ProjectMirador/mirador/blob/a4a71087833d01c81eca8ebfdbac682b821c8100/js/src/annotations/catchEndpoint.js
+
+      console.log("converted to %o",result);
 
       return result;
     },
