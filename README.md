@@ -1,5 +1,15 @@
 Crowdcat
 
+# An exploratory platform providing Virtuoso backed OA Annotations server and mirador front end
+
+![Image of annotations displaying in mirador](/images/AnnotationsFromVirt.png)
+
+# Architecture
+
+* Front end :: Mirador with a custom endpoint for talking OA Protocol -- 
+* Web API :: Provided by the grails app in crowdcat dir -- currently this app mixes a number of adminstrative tools and the OA Implementaiton. This is for conveinence only, in production the annotation controller will be moved into a stand-alone app separate to the admin functions.
+* Storage :: Provided by Virtuoso
+
 # Oauth Identity Provider Setup
 
 Google OAuth creds page::
