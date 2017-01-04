@@ -2,6 +2,8 @@ Crowdcat
 
 # An exploratory platform providing Virtuoso backed OA Annotations server and mirador front end
 
+Some extra info here https://youtu.be/FbakFZ3nEZI
+
 ![Image of annotations displaying in mirador](/images/AnnotationsFromVirt.png)
 
 # Architecture
